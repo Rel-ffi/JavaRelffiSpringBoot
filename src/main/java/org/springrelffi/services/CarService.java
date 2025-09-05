@@ -5,7 +5,7 @@ import org.springrelffi.controllers.CarRepository;
 import org.springrelffi.models.Car;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class CarService {
@@ -19,23 +19,14 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public Optional<Car> getCarById(int id) {
-        return carRepository.findById(id);
+    public Car getCarById(String id) {
+        return carRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(id));
+
     }
 
-    public Car addNewCar(Car car) {
-        return carRepository.save(car);
+    public void addNewCar(Car car) {
+        carRepository.save(car);
     }
 
-    public void deleteCar(int id) {
-        carRepository.deleteById(id);
-    }
-
-    public List<Car> findCarWithPower(int power) {
-        return carRepository.getByPower(power);
-    }
-
-    public List<Car> findCarWithProducer(String producer) {
-        return carRepository.getByProducer(producer);
-    }
 }

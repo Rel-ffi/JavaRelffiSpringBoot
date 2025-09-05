@@ -1,14 +1,10 @@
 package org.springrelffi.controllers;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import org.springrelffi.models.Car;
 
-import java.util.List;
-
 @Repository
-public interface CarRepository extends JpaRepository<Car, Integer> {
-    List<Car> getByPower(int power);
+public interface CarRepository extends MongoRepository<Car, String> {
 
-    List<Car> getByProducer(String producer);
 }
