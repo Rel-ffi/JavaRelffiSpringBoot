@@ -31,4 +31,10 @@ public class CarController {
         carService.addNewCar(car);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/cars/{id}")
+    public ResponseEntity<HttpStatus> removeCar(@PathVariable String id) {
+        carService.removeCar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
