@@ -2,9 +2,11 @@ package org.springrelffi.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springrelffi.models.Car;
 import org.springrelffi.models.levels.CarViews;
 import org.springrelffi.services.CarService;
@@ -13,12 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 public class CarController {
     private final CarService carService;
-
-    public CarController(CarService carService) {
-        this.carService = carService;
-    }
 
     @JsonView(CarViews.CarLevel3.class)
     @GetMapping("/cars")
@@ -33,8 +32,10 @@ public class CarController {
     }
 
     @PostMapping("/cars")
-    public ResponseEntity<HttpStatus> addNewCar(@RequestBody @Valid Car car) {
-        carService.addNewCar(car);
+    public ResponseEntity<HttpStatus> addNewCar(@ModelAttribute @Valid Car car,
+        @RequestParam("image") MultipartFile file) {
+        carService.addNewCar(car, file);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -55,4 +56,5 @@ public class CarController {
     public ResponseEntity<List<Car>> findCarWithProducer(@PathVariable String value) {
         return new ResponseEntity<>(carService.findCarWithProducer(value), HttpStatus.OK);
     }
+
 }

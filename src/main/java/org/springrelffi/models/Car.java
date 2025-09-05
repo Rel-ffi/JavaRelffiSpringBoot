@@ -36,4 +36,6 @@ public class Car {
     @PositiveOrZero
     @JsonView({CarViews.CarLevel1.class, CarViews.CarLevel2.class})
     private int power;
+    @JsonView({CarViews.CarLevel1.class,CarViews.CarLevel2.class,CarViews.CarLevel3.class})
+    private String file;
 }
